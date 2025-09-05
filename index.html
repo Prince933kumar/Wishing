@@ -128,7 +128,260 @@
     </p>
 
     <button onclick="showNote()">📜 Special Note for You</button>
-    <button onclick="startWishingbg()">💖 Wishing by Prince</button>
+    <button onclick="startWishing()">💖 Wishing by Prince</button>
+    <audio id="song" src="./Wish.mp3"></audio>
+    <audio id="wishSong" src="./Wish.mp3"></audio>
+
+    <!-- Wishing Text -->
+    <div id="wishText">🎉 Happy Teacher's Day Tiwari Sir 🎉</div>
+
+    <!-- Special Note Section -->
+    <div id="noteSection" class="hidden section">
+      <h2>Dear Tiwari Sir,</h2>
+      <button onclick="showSection('greeting')">Greeting</button>
+      <button onclick="showSection('poetry')">Poetry</button>
+      <button onclick="showSection('shayari')">Shayari</button>
+    </div>
+
+    <!-- Greeting Section -->
+    <div id="greeting" class="hidden section">
+      <h2>🌸 Happy Teacher’s Day 🌸</h2>
+      <h2>Dear Tiwari Sir,</h2>
+      <p>
+        On this Teacher’s Day, I want to express my heartfelt gratitude for your guidance and support.  
+        Your patience, dedication, and passion for teaching have inspired me to keep learning and give my best every day.
+      </p>
+      <p>
+        Thank you for always believing in me and making every lesson meaningful.  
+        Wishing you happiness, good health, and continued success today and always!
+      </p>
+      <p><b>With respect and gratitude,<br>[Prince]</b></p>
+    </div>
+
+    <!-- Poetry Section with Audio -->
+    <div id="poetry" class="hidden section">
+      <h2>📖 Poetry for Teacher's Day</h2>
+      <p>Enjoy this poetry audio dedicated to you, Sir 🎶</p>
+      <audio controls>
+        <source src="poetry.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <!-- Shayari Section -->
+    <div id="shayari" class="hidden section">
+      <p>
+        Guiding our hearts with wisdom and light,
+You turn each moment of doubt into bright.
+With patience and care, you show us the way,
+We honor your efforts this Teacher’s Day. 🌸
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Toggle Special Note
+    function showNote() {
+      document.getElementById("noteSection").classList.toggle("hidden");
+    }
+
+    // Show Greeting/Poetry/Shayari
+    function showSection(id) {
+      ["greeting","poetry","shayari"].forEach(sec => {
+        document.getElementById(sec).classList.add("hidden");
+      });
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    // Wishing by Prince
+    function startWishing() {
+      // Show text
+      document.getElementById("wishText").style.display = "block";
+
+      // Play music
+      const wishAudio = document.getElementById("wishSong");
+      wishAudio.play();
+
+      // Confetti effect
+      launchConfetti();
+    }
+
+    // Confetti animation
+    function launchConfetti() {
+      const canvas = document.getElementById("confettiCanvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confetti = [];
+      for (let i = 0; i < 200; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 50,
+          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+          tilt: Math.floor(Math.random() * 10) - 10
+        });
+      }
+
+      function drawConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach((c) => {
+          ctx.beginPath();
+          ctx.fillStyle = c.color;
+          ctx.ellipse(c.x, c.y, c.r, c.r/2, c.tilt, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        updateConfetti();
+      }
+
+      function updateConfetti() {
+        confetti.forEach((c) => {
+          c.y += 2 + Math.random() * 3;
+          c.x += Math.sin(c.d);
+          if (c.y > canvas.height) {
+            c.y = -10;
+            c.x = Math.random() * canvas.width;
+          }
+        });
+      }
+
+      setInterval(drawConfetti, 20);
+    }
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Teacher's Day</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      text-align: center;
+      padding: 40px 20px;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #FEC198;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #263542;
+      margin-bottom: 20px;
+      animation: zoomPulse 2s infinite;
+    }
+    @keyframes zoomPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .photo-frame {
+      border: 5px solid #FEE1A2;
+      border-radius: 50%;
+      overflow: hidden;
+      width: 200px;
+      height: 200px;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    button {
+      background-color: #292642;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 8px;
+      animation: bounce 1.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    button:hover { background-color: #c2185b; }
+
+    /* Hidden sections */
+    .hidden { display: none; }
+    .section {
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    audio {
+      margin-top: 15px;
+    }
+
+    /* Wishing text */
+    #wishText {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #e91e63;
+      margin-top: 20px;
+      display: none;
+      animation: popIn 1s ease-in-out;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Confetti canvas */
+    #confettiCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="container">
+    <h1>🎉Happy Teacher's Day <span id="name">Tiwari Sir🎉</span> </h1>
+    
+    <div class="photo-frame">
+      <img src="TiwariSir.jpg" alt="Tiwari Sir" />
+    </div>
+    
+    <p class="message">
+      “Your patience and guidance have helped us understand the true meaning of learning.
+      Without your care and inspiration, this journey would feel incomplete.
+      Wishing you a very Happy Teacher’s Day — may you always be blessed with good health, respect, and endless happiness.”🙏🌸
+    </p>
+
+    <button onclick="showNote()">📜 Special Note for You</button>
+    <button onclick="startWishing()">💖 Wishing by Prince</button>
     <audio id="song" src="./Wish.mp3"></audio>
     <audio id="wishSong" src="./Wish.mp3"></audio>
 
